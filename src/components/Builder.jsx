@@ -30,7 +30,7 @@ function Builder() {
     setLoading(true);
     try {
       const result = await createEvent('chatgpt_request', {
-        prompt: `قم بإنشاء كود كامل لمشروع ${projectDescription()} باسم "${projectName()}". المواصفات: ${specifications()}`,
+        prompt: `قم بإنشاء صفحة HTML كاملة لمشروع باسم "${projectName()}", يتعلق بـ "${projectDescription()}". المواصفات: ${specifications()}. اجعل الشفرة جاهزة ومرتبة ومتوافقة مع HTML5.`,
         response_type: 'text'
       });
       setGeneratedCode(result);
@@ -85,11 +85,11 @@ function Builder() {
   };
 
   const handleDownloadCode = () => {
-    const blob = new Blob([generatedCode()], { type: 'text/plain;charset=utf-8' });
+    const blob = new Blob([generatedCode()], { type: 'text/html;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${projectName()}.txt`;
+    a.download = `${projectName()}.html`;
     a.click();
     URL.revokeObjectURL(url);
   };

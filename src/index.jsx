@@ -9,6 +9,7 @@ window.progressierAppRuntimeSettings = {
   name: "تطبيق جديد",
   shortName: "تطبيق جديد"
 };
+
 let script = document.createElement('script');
 script.setAttribute('src', 'https://progressier.app/z8yY3IKmfpDIw3mSncPh/script.js');
 script.setAttribute('defer', 'true');
