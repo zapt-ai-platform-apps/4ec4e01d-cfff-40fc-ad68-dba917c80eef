@@ -9,5 +9,5 @@ export default defineConfig({
   },
   resolve: {
     conditions: ['development', 'browser'],
-  }
+  },
 });

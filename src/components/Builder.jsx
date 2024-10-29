@@ -22,6 +22,7 @@ function Builder() {
   const handleBack = () => {
     if (currentStep() > 1) {
       setCurrentStep(currentStep() - 1);
+      setGeneratedCode('');
     }
   };
 
@@ -29,7 +30,7 @@ function Builder() {
     setLoading(true);
     try {
       const result = await createEvent('chatgpt_request', {
-        prompt: `Generate code for a ${projectDescription()} named "${projectName()}". Specifications: ${specifications()}`,
+        prompt: `Generate the full code for a ${projectDescription()} named "${projectName()}". Specifications: ${specifications()}`,
         response_type: 'text'
       });
       setGeneratedCode(result);
@@ -44,7 +45,7 @@ function Builder() {
     setLoading(true);
     try {
       const result = await createEvent('generate_image', {
-        prompt: 'An illustrative image for my project'
+        prompt: `An illustrative image for a project named "${projectName()}" which is about ${projectDescription()}`
       });
       setGeneratedImage(result);
     } catch (error) {
@@ -58,7 +59,7 @@ function Builder() {
     setLoading(true);
     try {
       const result = await createEvent('text_to_speech', {
-        text: `Project Name: ${projectName()}. Description: ${projectDescription()}`
+        text: `Project Name: ${projectName()}. Description: ${projectDescription()}. Specifications: ${specifications()}`
       });
       setAudioUrl(result);
     } catch (error) {
@@ -72,7 +73,7 @@ function Builder() {
     setLoading(true);
     try {
       const result = await createEvent('chatgpt_request', {
-        prompt: 'Write a detailed README.md content for my project in markdown format',
+        prompt: `Write a detailed README.md content for a project named "${projectName()}" which is about ${projectDescription()}. Include the following specifications: ${specifications()}`,
         response_type: 'text'
       });
       setMarkdownContent(result);
@@ -139,9 +140,9 @@ function Builder() {
               Back
             </button>
             <button
-              class={`px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${loading() ? 'opacity-50 cursor-not-allowed' : ''}`}
+              class={`px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${loading() || !specifications() ? 'opacity-50 cursor-not-allowed' : ''}`}
               onClick={handleGenerateProject}
-              disabled={loading()}
+              disabled={loading() || !specifications()}
             >
               {loading() ? 'Generating...' : 'Generate Project'}
             </button>
@@ -155,7 +156,7 @@ function Builder() {
           <pre class="bg-white p-4 rounded-lg shadow-md overflow-auto max-h-96">
             {generatedCode()}
           </pre>
-          <div class="flex space-x-4 mt-4">
+          <div class="flex flex-wrap space-x-4 mt-4">
             <button
               class="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
               onClick={handleDownloadCode}
