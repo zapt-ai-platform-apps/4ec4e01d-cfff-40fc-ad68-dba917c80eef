@@ -13,9 +13,8 @@ New App is an AI-powered website and app builder that allows users to create cus
 
 ### 2. Creating a New Project
 
-1. On the home page, click the "Create New Project" button.
-2. Enter your project name and a brief description.
-3. Click "Next" to proceed to the project specifications.
+1. On the home page, enter your project name and a brief description.
+2. Click "Next" to proceed to the project specifications.
 
 ### 3. Generating a Website or App
 
@@ -23,13 +22,13 @@ New App is an AI-powered website and app builder that allows users to create cus
 2. Click on the "Generate Project" button.
 3. The app sends your specifications to the AI backend.
 4. A loading indicator displays while your project is being generated.
-5. Once generated, a preview of your website or app is displayed.
+5. Once generated, a preview of your website or app code is displayed.
 
 ### 4. Previewing and Downloading the Project
 
-1. Review the generated website or app preview.
+1. Review the generated website or app code in the preview section.
 2. If satisfied, click on the "Download Code" button to download the generated code files.
-3. To make changes, click "Modify Specifications" to adjust your inputs and regenerate the project.
+3. To make changes, click "Back" to adjust your inputs and regenerate the project.
 
 ### 5. Additional Features
 

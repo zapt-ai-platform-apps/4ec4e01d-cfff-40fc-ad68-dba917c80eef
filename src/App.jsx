@@ -1,7 +1,7 @@
 import { createSignal, onMount, createEffect, Show } from 'solid-js';
 import { Auth } from '@supabase/auth-ui-solid';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
-import { supabase, createEvent } from './supabaseClient';
+import { supabase } from './supabaseClient';
 import Builder from './components/Builder';
 
 function App() {
