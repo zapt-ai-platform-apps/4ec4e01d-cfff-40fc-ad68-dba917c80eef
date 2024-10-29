@@ -1,6 +1,8 @@
 import { createSignal, Show } from 'solid-js';
 import { createEvent } from '../supabaseClient';
 import { SolidMarkdown } from 'solid-markdown';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 
 function Builder() {
   const [projectName, setProjectName] = createSignal('');
@@ -30,7 +32,7 @@ function Builder() {
     setLoading(true);
     try {
       const result = await createEvent('chatgpt_request', {
-        prompt: `قم بإنشاء صفحة HTML كاملة لمشروع باسم "${projectName()}", يتعلق بـ "${projectDescription()}". المواصفات: ${specifications()}. اجعل الشفرة جاهزة ومرتبة ومتوافقة مع HTML5.`,
+        prompt: `قم بإنشاء مشروع كامل يتضمن صفحات HTML وملفات CSS وJavaScript لمشروع باسم "${projectName()}", يتعلق بـ "${projectDescription()}". المواصفات: ${specifications()}. اجعل الشفرة جاهزة ومرتبة ومتوافقة مع HTML5.`,
         response_type: 'text'
       });
       setGeneratedCode(result);
@@ -84,14 +86,40 @@ function Builder() {
     }
   };
 
-  const handleDownloadCode = () => {
-    const blob = new Blob([generatedCode()], { type: 'text/html;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${projectName()}.html`;
-    a.click();
-    URL.revokeObjectURL(url);
+  const handleDownloadCode = async () => {
+    setLoading(true);
+    try {
+      const zip = new JSZip();
+
+      // إضافة ملف index.html
+      zip.file('index.html', generatedCode());
+
+      // إضافة الصورة المُولدة إذا وجدت
+      if (generatedImage()) {
+        const imageBlob = await fetch(generatedImage()).then((r) => r.blob());
+        zip.file('assets/image.png', imageBlob);
+      }
+
+      // إضافة ملف الصوت المُولد إذا وجد
+      if (audioUrl()) {
+        const audioBlob = await fetch(audioUrl()).then((r) => r.blob());
+        zip.file('assets/audio.mp3', audioBlob);
+      }
+
+      // إضافة ملف README.md المُولد إذا وجد
+      if (markdownContent()) {
+        zip.file('README.md', markdownContent());
+      }
+
+      // توليد ملف ZIP وتنزيله
+      zip.generateAsync({ type: 'blob' }).then((content) => {
+        saveAs(content, `${projectName()}.zip`);
+      });
+    } catch (error) {
+      console.error('Error downloading code:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -114,7 +142,9 @@ function Builder() {
             class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent box-border text-right"
           />
           <button
-            class={`px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${!(projectName() && projectDescription()) ? 'opacity-50 cursor-not-allowed' : ''}`}
+            class={`px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${
+              !(projectName() && projectDescription()) ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
             onClick={handleNext}
             disabled={!(projectName() && projectDescription())}
           >
@@ -140,7 +170,9 @@ function Builder() {
               العودة
             </button>
             <button
-              class={`px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${loading() || !specifications() ? 'opacity-50 cursor-not-allowed' : ''}`}
+              class={`px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${
+                loading() || !specifications() ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
               onClick={handleGenerateProject}
               disabled={loading() || !specifications()}
             >
@@ -158,27 +190,36 @@ function Builder() {
           </pre>
           <div class="flex flex-wrap space-x-4 mt-4 justify-end">
             <button
-              class="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
+              class={`px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${
+                loading() ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
               onClick={handleDownloadCode}
+              disabled={loading()}
             >
-              تنزيل الشفرة
+              {loading() ? 'جاري التنزيل...' : 'تنزيل المشروع'}
             </button>
             <button
-              class={`px-6 py-3 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${loading() ? 'opacity-50 cursor-not-allowed' : ''}`}
+              class={`px-6 py-3 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${
+                loading() ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
               onClick={handleGenerateImage}
               disabled={loading()}
             >
               {loading() ? 'جاري توليد الصورة...' : 'توليد صورة'}
             </button>
             <button
-              class={`px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${loading() ? 'opacity-50 cursor-not-allowed' : ''}`}
+              class={`px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${
+                loading() ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
               onClick={handleTextToSpeech}
               disabled={loading()}
             >
               {loading() ? 'جاري توليد الصوت...' : 'تحويل النص إلى كلام'}
             </button>
             <button
-              class={`px-6 py-3 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${loading() ? 'opacity-50 cursor-not-allowed' : ''}`}
+              class={`px-6 py-3 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition duration-300 ease-in-out transform hover:scale-105 cursor-pointer ${
+                loading() ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
               onClick={handleGenerateMarkdown}
               disabled={loading()}
             >

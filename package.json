@@ -12,7 +12,9 @@
     "@solidjs/router": "^0.8.4",
     "@zapt/zapt-js": "^1.0.5",
     "solid-js": "^1.8.22",
-    "solid-markdown": "^2.0.13"
+    "solid-markdown": "^2.0.13",
+    "jszip": "^3.10.1",
+    "file-saver": "^2.0.5"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.20",
