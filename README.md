@@ -1,38 +1,38 @@
-# New App
+# تطبيق جديد
 
-New App is an AI-powered website and app builder that allows users to create custom websites and applications using artificial intelligence, without the need to sign in or create an account.
+تطبيق جديد هو منشئ مواقع وتطبيقات مدعوم بالذكاء الاصطناعي يتيح للمستخدمين إنشاء مواقع وتطبيقات مخصصة باستخدام الذكاء الاصطناعي، دون الحاجة إلى تسجيل الدخول أو إنشاء حساب.
 
-## User Journeys
+## رحلات المستخدم
 
-### 1. Creating a New Project
+### 1. إنشاء مشروع جديد
 
-1. Open the New App application.
-2. You are presented with the main page to create a new project.
-3. Enter your project name and a brief description.
-4. Click "Next" to proceed to the project specifications.
+1. افتح تطبيق "تطبيق جديد".
+2. ستظهر لك الصفحة الرئيسية لإنشاء مشروع جديد.
+3. أدخل اسم المشروع ووصفًا موجزًا.
+4. اضغط على "التالي" للانتقال إلى مواصفات المشروع.
 
-### 2. Generating a Website or App
+### 2. توليد موقع أو تطبيق
 
-1. Provide detailed specifications or requirements for your website or app in the input field.
-2. Click on the "Generate Project" button.
-3. The app sends your specifications to the AI backend.
-4. A loading indicator displays while your project is being generated.
-5. Once generated, a preview of your website or app code is displayed.
+1. قدم مواصفات أو متطلبات مفصلة لموقعك أو تطبيقك في حقل الإدخال.
+2. انقر على زر "توليد المشروع".
+3. يُرسل التطبيق مواصفاتك إلى الخلفية الذكية.
+4. يتم عرض مؤشر تحميل أثناء إنشاء مشروعك.
+5. بمجرد الانتهاء، يتم عرض معاينة لشفرة موقعك أو تطبيقك.
 
-### 3. Previewing and Downloading the Project
+### 3. معاينة وتنزيل المشروع
 
-1. Review the generated website or app code in the preview section.
-2. If satisfied, click on the "Download Code" button to download the generated code files.
-3. To make changes, click "Back" to adjust your inputs and regenerate the project.
+1. راجع شفرة الموقع أو التطبيق المُنشأ في قسم المعاينة.
+2. إذا كنت راضيًا، انقر على زر "تنزيل الشفرة" لتنزيل ملفات الشفرة المُنشأة.
+3. لإجراء تغييرات، انقر على "العودة" لتعديل مدخلاتك وإعادة إنشاء المشروع.
 
-### 4. Additional Features
+### 4. ميزات إضافية
 
-- **Generate Custom Images**: Use the "Generate Image" feature to create custom images for your project using AI.
-- **Text to Speech**: Utilize the "Text to Speech" feature to generate voice-overs or audio explanations for your project content.
-- **Markdown Story**: Generate a markdown-formatted story or content for inclusion in your project.
+- **توليد صور مخصصة**: استخدم ميزة "توليد صورة" لإنشاء صور مخصصة لمشروعك باستخدام الذكاء الاصطناعي.
+- **تحويل النص إلى كلام**: استفد من ميزة "تحويل النص إلى كلام" لإنشاء تعليقات صوتية أو ملفات صوتية لمحتوى مشروعك.
+- **قصة بتنسيق Markdown**: توليد قصة مفصلة بتنسيق Markdown لإدراجها في مشروعك.
 
-## External APIs Used
+## واجهات برمجة التطبيقات الخارجية المستخدمة
 
-- **OpenAI GPT-3.5**: Generates website and app code based on user specifications.
-- **OpenAI DALL·E**: Generates custom images based on user prompts.
-- **Text-to-Speech API**: Converts text content into speech audio files.
+- **OpenAI GPT-3.5**: يُنشئ شفرة الموقع والتطبيق بناءً على مواصفات المستخدم.
+- **OpenAI DALL·E**: يُنشئ صورًا مخصصة بناءً على مطالبات المستخدم.
+- **واجهة برمجة تطبيقات تحويل النص إلى كلام**: يحول محتوى النص إلى ملفات صوتية.

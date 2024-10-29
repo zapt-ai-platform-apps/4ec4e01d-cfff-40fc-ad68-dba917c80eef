@@ -1,7 +1,7 @@
 {
-  "name": "new-app",
+  "name": "تطبيق-جديد",
   "version": "1.0.0",
-  "description": "AI-powered website and app builder",
+  "description": "منشئ مواقع وتطبيقات مدعوم بالذكاء الاصطناعي",
   "type": "module",
   "scripts": {
     "dev": "vite",
